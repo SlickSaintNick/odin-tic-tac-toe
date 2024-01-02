@@ -1,0 +1,49 @@
+Goal: Two-player command-line tic-tac-toe.
+
+PSEUDOCODE:
+Display Introductory message.
+Ask Player1 and Player2 their names
+Initialize score to 0 - 0
+Display player names, score and board.
+While playing:
+    Players take turns.
+        In the first game, Player 1 has X and Player 2 has O.
+        X starts, then alternate turns.
+    Each turn:
+        Player indicates a square to place their piece on using CLI.
+        Check if a win condition is reached:
+            3 of the same piece in a row
+                Vertically (3 rows) or
+                Horizontally (3 rows) or
+                Diagonally (2 diagonals)
+        If a player has won
+            Victory message
+            Increment score for winning player.
+            If play again?
+                Swap which player has X and which has O.
+                Play another game.
+            If not?
+                Display final results and victory message.
+                Exit.
+        If it is not reached
+            Next player's turn
+
+
+Board (state)
+        9 squares (3 X 3)
+        Two different types of pieces - X and O.
+        Each board square can be blank, X or O.
+        Board has an index method similar to chess.
+            Lower case letter for column, number for row.
+            *--*--*--*
+            |a3|b3|c3|
+            *--*--*--*
+            |a2|b2|c2|
+            *--*--*--*
+            |a1|b1|c1|
+            *--*--*--*
+
+Display:
+
+Player 1 X:   Harrison
+Player 2 O:   Jacob
