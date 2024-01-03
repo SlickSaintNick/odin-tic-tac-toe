@@ -35,15 +35,96 @@ Board (state)
         Each board square can be blank, X or O.
         Board has an index method similar to chess.
             Lower case letter for column, number for row.
-            *--*--*--*
+            Index view
+            +--+--+--+
             |a3|b3|c3|
-            *--*--*--*
+            +--+--+--+
             |a2|b2|c2|
-            *--*--*--*
+            +--+--+--+
             |a1|b1|c1|
-            *--*--*--*
+            +--+--+--+
+
+            Array view
+            +--+--+--+
+            | 0| 1| 2|
+            +--+--+--+
+            | 3| 4| 5|
+            +--+--+--+
+            | 6| 7| 8|
+            +--+--+--+
+
+Win conditions:
+    Rows
+    0 == 1 == 2
+    3 == 4 == 5
+    6 == 7 == 8
+    
+    Columns    
+    0 == 3 == 6
+    1 == 4 == 7
+    2 == 5 == 8
+
+    Diagonals
+    0 == 4 == 8
+    2 == 4 == 6
+
+Board array:
+    Blank / X / O:  - ' ', 'X', 'O'
+
+    Board below would be:
+    ['X', 'O', 'O', ' ', 'X', ' ', 'X', ' ', 'O']
+
+Enter move:
+    Use e.g. a1, c3, etc.
 
 Display:
 
-Player 1 X:   Harrison
-Player 2 O:   Jacob
+-------------------
+Player 1 - X    0           (ScoreBoard)
+Harrison
+
+Player 2 - O    0
+Jacob
+-------------------
+    +---+---+---+           (GameBoard)
+  3 | X | O | O |
+    +---+---+---+
+  2 |   | X |   |
+    +---+---+---+
+  1 | X |   | O |
+    +---+---+---+
+      a   b   c
+
+Harrison >> a2               (Player)
+-------------------
+
+Objects and Methods
+
+Player
+- Take turns
+@name
+@my_turn
+@x_or_o
+def take_turn
+
+ScoreBoard
+- Remember and display the score
+@player1_score
+@player2_score
+@tie
+def score_round
+def display
+
+GameBoard
+- Remember and display the game state
+@game_board
+def display
+
+Referee
+- Introduce the game
+- Check for win condition or tie
+- Announce result
+def introduce_game
+def ask_names
+def game_over
+def announce_result
