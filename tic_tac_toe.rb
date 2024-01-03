@@ -1,11 +1,9 @@
 class ScoreBoard
-  def initialize
-    @player1 = 0
-    @player2 = 0
-    @tie = 0
-  end
+  @player1 = 0
+  @player2 = 0
+  @tie = 0
 
-  def update(winner, player1)
+  def self.update(winner, player1)
     if winner == 'tie'
       @tie += 1
       puts "\nThat round was a tie! Press 'Enter' to play another round, or 'exit' to quit."
@@ -24,7 +22,7 @@ class ScoreBoard
     end
   end
 
-  def display(player1, player2)
+  def self.display(player1, player2)
     Gem.win_platform? ? (system 'cls') : (system 'clear')
     puts '-------------------'
     puts "Player 1 - #{player1.x_or_o}    #{@player1}"
@@ -35,7 +33,7 @@ class ScoreBoard
     puts '-------------------'
   end
 
-  def final_result(player1, player2)
+  def self.final_result(player1, player2)
     puts "\nGame over!\n"
     puts 'The final results were:'
     puts "#{@player1}\t - \t#{player1.name}"
@@ -45,28 +43,26 @@ class ScoreBoard
 end
 
 class GameBoard
-  def initialize
-    @state = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-    @move_index = ['a3', 'b3', 'c3', 'a2', 'b2', 'c2', 'a1', 'b1', 'c1']
-    @grid = '    +---+---+---+'
-    @bottom_line = "      a   b   c\n"
-    @win_conditions = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ]
-  end
+  @state = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+  @MOVE_INDEX = ['a3', 'b3', 'c3', 'a2', 'b2', 'c2', 'a1', 'b1', 'c1']
+  @GRID = '    +---+---+---+'
+  @BOTTOM_LINE = "      a   b   c\n"
+  @WIN_CONDITIONS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
 
-  def display
+  def self.display
     [3, 2, 1].each do |i|
       first_index = (3 - i) * 3
 
-      puts @grid
+      puts @GRID
       print_row(
         i,
         @state[first_index],
@@ -74,25 +70,25 @@ class GameBoard
         @state[first_index + 2]
       )
     end
-    puts @grid
-    puts @bottom_line
+    puts @GRID
+    puts @BOTTOM_LINE
   end
 
-  def print_row(row_number, a, b, c)
+  def self.print_row(row_number, a, b, c)
     puts "  #{row_number} | #{a} | #{b} | #{c} |"
   end
 
-  def update(move, x_or_o)
-    @state[@move_index.find_index(move)] = x_or_o
+  def self.update(move, x_or_o)
+    @state[@MOVE_INDEX.find_index(move)] = x_or_o
   end
 
-  def valid_move?(move)
-    @state[@move_index.find_index(move)] == ' '
+  def self.valid_move?(move)
+    @state[@MOVE_INDEX.find_index(move)] == ' '
   end
 
-  def game_over
+  def self.game_over
     return 'tie' if !@state.include?(' ')
-    @win_conditions.each do |arr|
+    @WIN_CONDITIONS.each do |arr|
       line = [@state[arr[0]], @state[arr[1]], @state[arr[2]]]
       return 'X' if line.all? { |str| str == 'X' }
       return 'O' if line.all? { |str| str == 'O' }
@@ -100,7 +96,7 @@ class GameBoard
     'none'
   end
 
-  def clear
+  def self.clear
     @state = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
   end
 end
@@ -163,36 +159,33 @@ def ask_name(number)
   gets.chomp
 end
 
-score = ScoreBoard.new
-board = GameBoard.new
 introduce_game()
-
 
 player1 = Player.new(ask_name(1), true, 'X')
 player2 = Player.new(ask_name(2), false, 'O')
 
-score.display(player1, player2)
-board.display
+ScoreBoard.display(player1, player2)
+GameBoard.display
 
 keep_going = true
 while keep_going do
   if player1.my_turn
-    player1.take_turn(board)
+    player1.take_turn(GameBoard)
     player1.my_turn = false
     player2.my_turn = true
   elsif player2.my_turn
-    player2.take_turn(board)
+    player2.take_turn(GameBoard)
     player2.my_turn = false
     player1.my_turn = true
   end
-  score.display(player1, player2)
-  board.display
-  winner = board.game_over
+  ScoreBoard.display(player1, player2)
+  GameBoard.display
+  winner = GameBoard.game_over
   next if winner == 'none'
 
-  keep_going = score.update(winner, player1)
-  board.clear
-  score.display(player1, player2)
-  board.display
+  keep_going = ScoreBoard.update(winner, player1)
+  GameBoard.clear
+  ScoreBoard.display(player1, player2)
+  GameBoard.display
 end
-score.final_result(player1, player2)
+ScoreBoard.final_result(player1, player2)
