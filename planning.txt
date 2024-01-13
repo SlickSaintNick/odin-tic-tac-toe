@@ -81,11 +81,13 @@ Display:
 
 -------------------
 Player 1 - X    0           (ScoreBoard)
-Harrison
+>> Harrison <<
 
 Player 2 - O    0
-Jacob
--------------------
+   Jacob
+
+Tied games      0
+
     +---+---+---+           (GameBoard)
   3 | X | O | O |
     +---+---+---+
@@ -128,3 +130,40 @@ def introduce_game
 def ask_names
 def game_over
 def announce_result
+
+--- This changed significantly throughout implementation ---
+
+Reading the Rosetta code solution:
+
+Structure:
+module TicTacToe
+    class Game
+        def initialize
+            Holds the board, current player id and the 2 players as an array.
+        def play
+        def free_positions
+        def place_player_marker
+        def player_has_won?
+        def board_full?
+        def other_player_id
+        def switch_players!
+        def current_player
+        def opponent
+        def turn_num
+        def print_board
+    
+    class Player
+    
+    class HumanPlayer < Player
+        def select_position!
+        def to_s
+    
+    class ComputerPlayer < Player
+        def group_positions_by_markers
+        def select_position
+        def look_for_winning_or_blocking_position
+        def corner_trap_defense_needed?
+        def corner_trap_defense_position
+        def random_prioritized_position
+        def log_debug
+        def to_s
