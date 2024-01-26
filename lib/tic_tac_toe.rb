@@ -3,7 +3,7 @@ class ScoreBoard
   @player2 = 0
   @tie = 0
 
-  def self.update(winner, player1)
+  def self.update(winner, player1, player2)
     if winner == 'tie'
       @tie += 1
       puts "\nThat round was a tie! Press 'Enter' to play another round, or 'exit' to quit."
@@ -132,10 +132,10 @@ def introduce_game
   Gem.win_platform? ? (system 'cls') : (system 'clear')
   puts "
   _____ ___ ____    _____  _    ____    _____ ___  _____
- |_   _|_ _/ ___|  |_   _|/ \  / ___|  |_   _/ _ \| ____|
-   | |  | | |   _____| | / _ \| |   _____| || | | |  _|
-   | |  | | |__|_____| |/ ___ \ |__|_____| || |_| | |___
-   |_| |___\____|    |_/_/   \_\____|    |_| \___/|_____|
+ |_   _|_ _/ ___|  |_   _|/ \\  / ___|  |_   _/ _ \\| ____|
+   | |  | | |   _____| | / _ \\| |   _____| || | | |  _|
+   | |  | | |__|_____| |/ ___ \\ |__|_____| || |_| | |___
+   |_| |___\\____|    |_/_/   \\_\\____|    |_| \\___/|_____|
 
 Play with 2 players.
 
@@ -183,7 +183,7 @@ while keep_going do
   winner = GameBoard.game_over
   next if winner == 'none'
 
-  keep_going = ScoreBoard.update(winner, player1)
+  keep_going = ScoreBoard.update(winner, player1, player2)
   GameBoard.clear
   ScoreBoard.display(player1, player2)
   GameBoard.display
