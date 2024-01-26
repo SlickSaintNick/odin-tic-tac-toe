@@ -32,7 +32,7 @@ class GameBoard
     @state[@move_index.find_index(move)] = x_or_o
   end
 
-  def valid_move?(move)
+  def square_available?(move)
     @state[@move_index.find_index(move)] == ' '
   end
 

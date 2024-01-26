@@ -41,11 +41,11 @@ class ScoreBoard
     puts '-------------------'
   end
 
-  def final_result(player1_score, player2_score)
+  def display_final_result(player1_name, player2_name)
     puts "\nGame over!\n"
     puts 'The final results were:'
-    puts "#{@player1_score}\t - \t#{player1_score.name}"
-    puts "#{@player2_score}\t - \t#{player2_score.name}"
+    puts "#{@player1_score}\t - \t#{player1_name}"
+    puts "#{@player2_score}\t - \t#{player2_name}"
     puts "#{@tie}\t - \tTied rounds\n\n\n"
   end
 end

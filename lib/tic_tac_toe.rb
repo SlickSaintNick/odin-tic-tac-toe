@@ -7,8 +7,8 @@ require_relative 'player'
 # 2-player Tic-Tac-Toe game
 class TicTacToe
   def initialize
-    @player1 = Player.new(ask_name(1), true, 'X')
-    @player2 = Player.new(ask_name(2), false, 'O')
+    @player1 = Player.new(ask_name('Player 1 name?'), true, 'X')
+    @player2 = Player.new(ask_name('Player 2 name?'), false, 'O')
     @score_board = ScoreBoard.new
     @game_board = GameBoard.new
   end
@@ -17,7 +17,7 @@ class TicTacToe
     introduce_game
     display_board
     game_loop
-    @score_board.final_result(@player1, @player2)
+    @score_board.display_final_result(@player1.name, @player2.name)
   end
 
   def game_loop
@@ -28,7 +28,7 @@ class TicTacToe
       next if winner == 'none'
 
       @score_board.update_score(winner, @player1, @player2)
-      @score_board.display_round_winner(winner, @player1, @player2)
+      display_round_winner(winner)
       return unless continue_playing?
 
       clear_board
@@ -52,6 +52,17 @@ class TicTacToe
     @game_board.display
   end
 
+  def display_round_winner(winner)
+    case winner
+    when 'tie'
+      puts "\nThat round was a tie!"
+    when @player1.x_or_o
+      puts "\n#{@player1.name} won that round!"
+    when @player2.x_or_o
+      puts "\n#{@player2.name} won that round!"
+    end
+  end
+
   def clear_board
     @game_board.clear
     display_board
@@ -62,8 +73,8 @@ class TicTacToe
     gets.chomp.downcase.strip.slice(0..3) != 'exit'
   end
 
-  def ask_name(number)
-    print "Player #{number} name? >> "
+  def ask_name(prompt)
+    print "#{prompt} >> "
     gets.chomp
   end
 
@@ -95,5 +106,3 @@ class TicTacToe
   end
   # rubocop:enable Metrics/MethodLength
 end
-
-TicTacToe.new.play_game
