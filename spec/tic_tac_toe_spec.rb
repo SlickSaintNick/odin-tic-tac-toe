@@ -37,6 +37,31 @@ describe TicTacToe do
     expect(game_board).to be_instance_of(GameBoard)
   end
 
+  describe '#display_board' do
+    it 'sends a message "display" to score_board with the two player objects' do
+      score_board = game.instance_variable_get(:@score_board)
+      player1 = game.instance_variable_get(:@player1)
+      player2 = game.instance_variable_get(:@player2)
+
+      # Suppress puts
+      allow($stdout).to receive(:puts)
+      allow(score_board).to receive(:clear_screen).and_return nil
+      ENV['RSPEC_TEST'] = 'true'
+
+      expect(score_board).to receive(:display).with(player1, player2)
+      game.display_board
+
+      ENV['RSPEC_TEST'] = nil
+    end
+
+    it 'sends a message "display" to game_board' do
+      game_board = game.instance_variable_get(:@game_board)
+      allow($stdout).to receive(:puts)
+      expect(game_board).to receive(:display)
+      game.display_board
+    end
+  end
+
   # subject(:game) { described_class.new }
   # let(:player1) { Player.new('player1', true, 'X') }
   # let(:player2) { Player.new('player2', false, 'O') }

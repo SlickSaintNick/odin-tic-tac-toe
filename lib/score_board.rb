@@ -31,7 +31,7 @@ class ScoreBoard
   end
 
   def display(player1, player2)
-    Gem.win_platform? ? (system 'cls') : (system 'clear')
+    clear_screen
     puts '-------------------'
     puts "Player 1 - #{player1.x_or_o}    #{@player1_score}"
     puts "#{player1.my_turn ? '>> ' : '   '}#{player1.name}#{player1.my_turn ? ' <<' : ''}"
@@ -39,6 +39,11 @@ class ScoreBoard
     puts "#{player2.my_turn ? '>> ' : '   '}#{player2.name}#{player2.my_turn ? ' <<' : ''}"
     puts "\nTied games      #{@tie}"
     puts '-------------------'
+  end
+
+  def clear_screen
+    system_command = Gem.win_platform? ? 'cls' : 'clear'
+    system(system_command) unless ENV['RSPEC_TEST'] == 'true'
   end
 
   def display_final_result(player1_name, player2_name)
