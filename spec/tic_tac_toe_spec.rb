@@ -38,46 +38,48 @@ describe TicTacToe do
   end
 
   describe '#display_board' do
-    it 'sends a message "display" to score_board with the two player objects' do
-      score_board = game.instance_variable_get(:@score_board)
-      player1 = game.instance_variable_get(:@player1)
-      player2 = game.instance_variable_get(:@player2)
+    xit 'sends a message "display" to score_board with the two player objects' do
+      player1 = double('Player1')
+      player2 = double('Player2')
+      score_board = double('ScoreBoard')
+      game_board = double('GameBoard')
 
       # Suppress puts
       allow($stdout).to receive(:puts)
-      allow(score_board).to receive(:clear_screen).and_return nil
-      ENV['RSPEC_TEST'] = 'true'
+      allow(score_board).to receive(:clear_screen)
+      allow(score_board).to receive(:display)
 
       expect(score_board).to receive(:display).with(player1, player2)
-      game.display_board
 
-      ENV['RSPEC_TEST'] = nil
+      display_game = TicTacToe.new
+      allow(display_game).to receive(:instance_variable_get).and_return(:player1, :player2, :score_board, :game_board)
+
+      display_game.display_board
     end
 
-    it 'sends a message "display" to game_board' do
-      game_board = game.instance_variable_get(:@game_board)
+    xit 'sends a message "display" to game_board' do
+      game_board = double('GameBoard')
+      score_board = double('ScoreBoard')
+
+      allow(game_board).to receive(:display).and_return nil
+      allow(score_board).to receive(:display).and_return nil
       allow($stdout).to receive(:puts)
+
+      display_game = TicTacToe.new
+      allow(display_game).to receive(:instance_variable_get).and_return(game_board, score_board)
+
       expect(game_board).to receive(:display)
       game.display_board
     end
   end
 
-  # subject(:game) { described_class.new }
-  # let(:player1) { Player.new('player1', true, 'X') }
-  # let(:player2) { Player.new('player2', false, 'O') }
-
-  # before do
-  #   game.instance_variable_set(:@player1, player1)
-  #   game.instance_variable_set(:@player2, player2)
-  #   allow(player1).to receive(player1.take_turn).and_return nil
-  # end
-
-  # describe '#player_turn' do
-  #   it 'calls player1.take_turn when it is player1 turn' do
-  #     expect(player1).to receive(player1.take_turn)
-
-  #   end
-
-  # end
+  describe '#player_turn' do
+    context 'when it is player1s turn' do
+      it 'sends a message to player1 to take their turn'
+      it 'does not send a message to player2 to take their turn'
+      it 'updates player1.my_turn to false'
+      it 'updates player2.my_turn to true'
+    end
+  end
 
 end

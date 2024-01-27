@@ -42,8 +42,7 @@ class ScoreBoard
   end
 
   def clear_screen
-    system_command = Gem.win_platform? ? 'cls' : 'clear'
-    system(system_command) unless ENV['RSPEC_TEST'] == 'true'
+    Gem.win_platform? ? system('cls') : system('clear')
   end
 
   def display_final_result(player1_name, player2_name)
