@@ -72,14 +72,4 @@ describe TicTacToe do
       game.display_board
     end
   end
-
-  describe '#player_turn' do
-    context 'when it is player1s turn' do
-      it 'sends a message to player1 to take their turn'
-      it 'does not send a message to player2 to take their turn'
-      it 'updates player1.my_turn to false'
-      it 'updates player2.my_turn to true'
-    end
-  end
-
 end

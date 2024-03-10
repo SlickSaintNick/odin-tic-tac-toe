@@ -48,7 +48,8 @@ describe GameBoard do
     end
 
     it 'returns "tie" if the position is not won and all squares are taken' do
-      game_board.instance_variable_set(:@state, [
+      game_board.instance_variable_set
+      (:@state, [
         'X', 'O', 'X',
         'O', 'X', 'O',
         'O', 'X', 'O'
